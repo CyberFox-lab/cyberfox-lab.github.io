@@ -20,11 +20,13 @@ E:\project\cyberfox-lab.github.io\app
 E:\project\cyberfox-lab.github.io
 ├─ app\
 │  ├─ src\
-│  │  ├─ App.jsx                  # 页面结构、每日 AI 热点数据
+│  │  ├─ App.jsx                  # 页面结构
 │  │  ├─ styles.css               # 页面样式
 │  │  └─ content\
-│  │     ├─ posts.js              # Markdown 文章读取和解析
-│  │     └─ posts\                # 个人博客文章 Markdown
+│  │     ├─ posts.js              # 个人博客 Markdown 读取和解析
+│  │     ├─ dailyAi.js            # 每日 AI 热点 Markdown 读取和解析
+│  │     ├─ posts\                # 个人博客文章 Markdown
+│  │     └─ daily-ai\             # 每日 AI 热点 Markdown
 │  ├─ package.json
 │  └─ vite.config.mjs
 ├─ assets\                        # 构建后的线上资源
@@ -94,53 +96,53 @@ source: 作者笔记
 
 ## 写每日 AI 热点
 
-每日 AI 热点目前还在代码里维护，位置是：
+每日 AI 热点目录：
 
 ```text
-E:\project\cyberfox-lab.github.io\app\src\App.jsx
+E:\project\cyberfox-lab.github.io\app\src\content\daily-ai
 ```
 
-搜索：
+新建一个 `.md` 文件，例如：
 
 ```text
-const hotspotByDate = {
+2026-06-18.md
 ```
 
-新增一天的格式：
+每日热点模板：
 
-```jsx
-"06-18": {
-  title: "今天的热点标题",
-  summary: "今天的热点总述。",
-  items: [
-    {
-      type: "模型发布",
-      text: "第一条热点内容。",
-      source: "来源名称",
-      url: "https://example.com/article",
-    },
-    {
-      type: "产品更新",
-      text: "第二条热点内容。",
-      source: "来源名称",
-      url: "https://example.com/article",
-    },
-    {
-      type: "产业观察",
-      text: "第三条热点内容。",
-      source: "来源名称",
-      url: "https://example.com/article",
-    },
-  ],
-},
+```md
+---
+slug: 06-18
+date: 2026-06-18
+title: 今日 AI 热点标题
+summary: 今日热点摘要。
+---
+
+## 模型发布
+
+第一条热点正文。
+
+来源：来源名称
+
+链接：https://example.com/article
+
+## 产品更新
+
+第二条热点正文。
+
+来源：来源名称
+
+链接：#
 ```
 
 注意：
 
-- 日期 key 目前使用 `MM-DD`，例如 `06-18`
-- 新日期建议放在 `hotspotByDate` 最上方
+- `slug` 使用 `MM-DD`，例如 `06-18`
+- `date` 使用完整日期，排序会按这个字段倒序
+- 每个 `##` 是一条热点分类，会出现在详情页目录里
+- 每条热点下面写正文、`来源：...`、`链接：...`
+- 链接暂时没有时可以写 `#`
 - 首页和详情页会自动显示日期按钮
-- `url` 暂时没有链接时可以写 `"#"`
 
 ## 本地预览
 
@@ -248,7 +250,7 @@ git status --short
 ## 推荐日常流程
 
 1. 在 `app\src\content\posts` 写个人博客 Markdown
-2. 如有每日热点，编辑 `app\src\App.jsx` 里的 `hotspotByDate`
+2. 如有每日热点，在 `app\src\content\daily-ai` 新建或编辑 Markdown
 3. 本地运行 `npm run dev` 预览
 4. 浏览器确认没问题
 5. 回到仓库根目录运行 `.\publish.ps1 "本次更新说明"`
