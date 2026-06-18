@@ -1,6 +1,6 @@
 ﻿import { useEffect, useMemo, useState } from "react";
 import { posts } from "./content/posts";
-
+import { dates, hotspotByDate } from "./content/dailyAi";
 
 const projects = [
   {
@@ -44,53 +44,6 @@ const projects = [
   },
 ];
 
-const hotspotByDate = {
-  "06-17": {
-    title: "前沿模型发布进入政策敏感区",
-    summary:
-      "今天的 AI 热点集中在 Anthropic 模型管制争议：能力、开放、商业化和国家安全正在撞到一起。",
-    items: [
-      {
-        type: "政策监管",
-        text: "Anthropic 前沿模型管制争议继续发酵，AI 发布节奏开始受到出口控制与国家安全框架影响。",
-        source: "The Guardian",
-        url: "https://www.theguardian.com/commentisfree/2026/jun/16/anthropic-fable-ai",
-      },
-      {
-        type: "产业观察",
-        text: "企业采购 AI 服务时，除了能力和价格，也要重新评估模型可用性、地区限制和供应连续性。",
-        source: "Axios",
-        url: "https://www.axios.com/2026/06/16/ai-anthropic-export-controls",
-      },
-      {
-        type: "产品启发",
-        text: "越强的 agent 能力越需要发布前的分级访问、审计日志、回滚机制和用户侧风险提示。",
-        source: "Business Insider",
-        url: "https://www.businessinsider.com/anthropic-ai-safety-protocols-white-house-mythos-fable-2026-6",
-      },
-    ],
-  },
-  "06-16": {
-    title: "开发工具继续前置 AI 规划能力",
-    summary: "代码工具正在从补全走向任务规划、审查和批量评测。",
-    items: [
-      { type: "产品更新", text: "主流开发工具继续把任务规划和代码审查前置。", source: "行业观察", url: "#" },
-      { type: "开源项目", text: "本地推理 UI 新增批量评测视图。", source: "开源社区", url: "#" },
-      { type: "研究论文", text: "关于 RAG 记忆压缩的实验报告获得关注。", source: "论文速读", url: "#" },
-    ],
-  },
-  "06-15": {
-    title: "语音、多模态和静态发布工具升温",
-    summary: "本地 AI 工作流正在更靠近内容生产和个人发布场景。",
-    items: [
-      { type: "模型发布", text: "语音到语音模型优化低延迟对话场景。", source: "模型观察", url: "#" },
-      { type: "产品更新", text: "AI 笔记应用开始强调可引用来源和版本历史。", source: "产品观察", url: "#" },
-      { type: "开源项目", text: "一个 Markdown 到站点生成器发布 GitHub Actions 模板。", source: "GitHub", url: "#" },
-    ],
-  },
-};
-
-const dates = Object.keys(hotspotByDate);
 
 function useHashRoute() {
   const [route, setRoute] = useState(() => window.location.hash.slice(1) || "/");
@@ -664,4 +617,5 @@ export function App() {
     </div>
   );
 }
+
 

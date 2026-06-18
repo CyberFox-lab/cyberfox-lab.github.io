@@ -59,6 +59,33 @@ source: 作者笔记
 这里写正文。
 ```
 
+## 写每日 AI 热点
+
+在这里新建 `.md` 文件：
+
+```text
+E:\project\cyberfox-lab.github.io\app\src\content\daily-ai
+```
+
+格式参考：
+
+```md
+---
+slug: 06-18
+date: 2026-06-18
+title: 今日 AI 热点标题
+summary: 今日热点摘要。
+---
+
+## 模型发布
+
+第一条热点正文。
+
+来源：来源名称
+
+链接：https://example.com/article
+```
+
 ## 发布到 GitHub Pages
 
 写完文章后运行：
