@@ -370,6 +370,8 @@ h1 {
 }
 
 .hotspot-item {
+  position: relative;
+  overflow: hidden;
   min-height: 130px;
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -377,9 +379,43 @@ h1 {
   backdrop-filter: blur(20px) saturate(145%);
   box-shadow: var(--shadow-soft);
   padding: 20px;
+  animation: hotspot-rise 520ms ease both;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.hotspot-item:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.hotspot-item:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.hotspot-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.42) 42%, transparent 68%);
+  opacity: 0;
+  transform: translateX(-42%);
+  transition: opacity 180ms ease, transform 520ms ease;
+  pointer-events: none;
+}
+
+.hotspot-item:hover {
+  border-color: color-mix(in srgb, var(--accent) 46%, var(--border));
+  background: rgba(255, 255, 255, 0.66);
+  box-shadow: 0 22px 52px rgba(39, 76, 111, 0.16);
+  transform: translateY(-5px);
+}
+
+.hotspot-item:hover::before {
+  opacity: 1;
+  transform: translateX(42%);
 }
 
 .hotspot-item span {
+  position: relative;
   display: inline-flex;
   margin-bottom: 14px;
   color: var(--accent);
@@ -388,10 +424,33 @@ h1 {
 }
 
 .hotspot-item p {
+  position: relative;
   margin: 0;
   color: var(--text);
   font-size: 15px;
   line-height: 1.65;
+}
+
+.hotspot-item button {
+  position: relative;
+  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.hotspot-item:hover button {
+  box-shadow: 0 10px 24px rgba(8, 119, 209, 0.13);
+  transform: translateY(-1px);
+}
+
+@keyframes hotspot-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .featured-grid {
@@ -905,5 +964,21 @@ code {
 
   .masthead {
     padding-bottom: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hotspot-item {
+    animation: none;
+    transition: none;
+  }
+
+  .hotspot-item::before {
+    display: none;
+  }
+
+  .hotspot-item:hover,
+  .hotspot-item:hover button {
+    transform: none;
   }
 }
