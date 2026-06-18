@@ -2,6 +2,12 @@
 
 这是博客和 GitHub Pages 发布仓库。
 
+完整编写和发布流程见：
+
+```text
+docs\workflow.md
+```
+
 ## 目录约定
 
 以后只使用这个目录：
@@ -17,6 +23,7 @@ E:\project\cyberfox-lab.github.io
 ├─ app\                  # 源码、Markdown 文章、本地开发项目
 ├─ assets\               # GitHub Pages 线上静态资源
 ├─ index.html            # GitHub Pages 线上首页
+├─ docs\workflow.md       # 编写和发布流程
 ├─ .nojekyll
 └─ publish.ps1           # 一键构建、提交、推送
 ```
