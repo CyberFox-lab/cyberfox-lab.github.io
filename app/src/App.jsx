@@ -70,6 +70,7 @@ function routeInfo(route) {
   return {
     name: parts[0] || "home",
     slug: decodeURIComponent(parts[1] || ""),
+    detailSlug: decodeURIComponent(parts[2] || ""),
   };
 }
 
@@ -149,7 +150,7 @@ function DailyHotspots({ activeDate, setActiveDate }) {
           <article className="hotspot-item" key={`${activeDate}-${item.type}`}>
             <span>{item.type}</span>
             <p>{item.text}</p>
-            <button type="button" onClick={() => goTo(`/daily-ai/${activeDate}`)}>
+            <button type="button" onClick={() => goTo(`/daily-ai/${activeDate}/${encodeURIComponent(item.slug)}`)}>
               查看详情
             </button>
           </article>
@@ -338,9 +339,10 @@ function ArticlePage({ post }) {
   );
 }
 
-function DailyPage({ date }) {
+function DailyPage({ date, itemSlug }) {
   const day = hotspotByDate[date] || hotspotByDate[dates[0]];
   const resolvedDate = hotspotByDate[date] ? date : dates[0];
+  const selectedItem = itemSlug ? day.items.find((item) => item.slug === itemSlug) : null;
   const resolvedIndex = dates.indexOf(resolvedDate);
   const previousDate = dates[resolvedIndex + 1];
   const nextDate = dates[resolvedIndex - 1];
@@ -352,6 +354,59 @@ function DailyPage({ date }) {
     ],
     url: item.url,
   }));
+
+  if (selectedItem) {
+    return (
+      <article className="detail-page">
+        <button className="back-link" type="button" onClick={() => goTo("/")}>
+          返回首页
+        </button>
+        <header className="article-hero">
+          <p className="section-kicker">Daily AI 文档</p>
+          <h1>{selectedItem.type}</h1>
+          <p>{selectedItem.text}</p>
+        </header>
+
+        <div className="reader-layout">
+          <aside className="toc" aria-label="每日 AI 文档目录">
+            <p className="section-kicker">Contents</p>
+            <button type="button" onClick={() => scrollToSection(sectionId("热点摘要"))}>
+              热点摘要
+            </button>
+            <button type="button" onClick={() => scrollToSection(sectionId("所属日报"))}>
+              所属日报
+            </button>
+          </aside>
+          <div className="article-body">
+            <section id={sectionId("热点摘要")}>
+              <h2>热点摘要</h2>
+              <p>{selectedItem.text}</p>
+            </section>
+            <section id={sectionId("所属日报")}>
+              <h2>所属日报</h2>
+              <p>{day.title}</p>
+              <p>{day.summary}</p>
+            </section>
+            <div className="article-source">
+              <strong>来源：</strong>
+              <span>{selectedItem.source}</span>
+              <br />
+              <strong>日期：</strong>
+              <span>{day.date}</span>
+              {selectedItem.url !== "#" && (
+                <>
+                  <br />
+                  <a href={selectedItem.url} target="_blank" rel="noreferrer">
+                    查看原文
+                  </a>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </article>
+    );
+  }
 
   return (
     <article className="detail-page">
@@ -565,7 +620,7 @@ export function App() {
       );
     }
     if (current.name === "posts") return <ArticlePage post={posts.find((post) => post.slug === current.slug)} />;
-    if (current.name === "daily-ai") return <DailyPage date={current.slug} />;
+    if (current.name === "daily-ai") return <DailyPage date={current.slug} itemSlug={current.detailSlug} />;
     if (current.name === "archive") return <ArchivePage />;
     if (current.name === "tags") return <TagPage tag={current.slug} />;
     if (current.name === "projects" && current.slug) {

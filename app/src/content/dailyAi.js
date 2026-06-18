@@ -54,6 +54,7 @@ function parseDailyItems(content) {
     }
 
     items.push({
+      slug: currentItem,
       type: currentItem,
       text: textLines.join(" "),
       source,
